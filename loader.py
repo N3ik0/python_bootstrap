@@ -36,3 +36,8 @@ class Loader:
         with open(self.data_dir / "t10k-labels.idx1-ubyte", "rb") as f:
             self.y_test = np.fromfile(f, dtype=np.uint8, offset=8)
             print(f"y_test shape: {self.y_test.shape}")
+
+    def prepare_dataset(self):
+        self.x_train = self.x_train.reshape(-1, 784) / 255
+        self.x_test = self.x_test.reshape(-1, 784) / 255
+    

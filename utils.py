@@ -9,6 +9,20 @@ def display_statistics(labels):
         percentage = (count / len(labels)) * 100
         print(f"Chiffre {i} : {count} images ({percentage:.2f}%)")
 
+""" Affiche un tableau de répartition des données de test & d'entrainement """
+def display_statistics_array(train_label, test_label):
+    print('Chiffre | Train Count (%) | Test Count (%)')
+    print('------------------------------------------')
+    for i in range(10):
+        # Compte le bon dataset
+        count_test = np.sum(test_label == i)
+        count_train = np.sum(train_label == i)
+        # Calcul le pourcentage
+        train_percentage = (count_train / len(train_label)) * 100
+        test_percentage = (count_test / len(test_label)) * 100
+        # Affichage
+        print(f' {i}      | {count_train} ({train_percentage:.2f}%) | {count_test} ({test_percentage:.2f}%)')
+
 """ Affiche une image du nombre souhaité """
 def display_image(loader, number):
     print(f'---Affichage de l\'image : {number} ---')
@@ -43,3 +57,4 @@ def display_all_numbers(loader):
     # Recalcul pour eviter les chevauchements de texte
     plt.tight_layout()
     plt.show()
+
