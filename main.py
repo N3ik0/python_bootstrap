@@ -19,6 +19,8 @@ utils.display_statistics(loader.y_train)
 # Distribution differentes via array
 utils.display_statistics_array(loader.y_train, loader.y_test)
 
+utils.display_distribution_bar_chart(loader.y_train)
+
 # Affichage du chiffre souhaité 
 # utils.display_image(loader, 5)
 
@@ -26,6 +28,8 @@ utils.display_statistics_array(loader.y_train, loader.y_test)
 utils.display_all_numbers(loader)
 
 # reshape des images
-reshape_img = loader.reshape_dataset()
+# reshape_img = loader.reshape_dataset()
 # Optimisation des images pour le calcul (passage à 1)
+
+
 

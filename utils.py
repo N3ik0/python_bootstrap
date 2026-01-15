@@ -58,3 +58,19 @@ def display_all_numbers(loader):
     plt.tight_layout()
     plt.show()
 
+
+""" Affiche la répartition en graphique barres """
+def display_distribution_bar_chart(train_labels):
+    count = []
+    for i in range(10):
+        train = np.sum(train_labels == i)
+        count.append(train)
+    bars = plt.bar(range(10), count)
+    plt.xticks(range(10))
+    plt.gca().bar_label(bars, padding=3)
+    plt.margins(y=0.1)
+    plt.title("Données d'entrainement en barres")
+    plt.xlabel("Chiffres")
+    plt.ylabel("Occurences")
+
+
