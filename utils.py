@@ -1,5 +1,7 @@
+from sklearn.metrics import confusion_matrix
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 """ Affiche les statistiques (images par chiffre & pourcentage) """
 def display_statistics(labels):
@@ -73,4 +75,25 @@ def display_distribution_bar_chart(train_labels):
     plt.xlabel("Chiffres")
     plt.ylabel("Occurences")
 
+""" Affiche une matrice de confusion """
+def display_confusion_matrix(y_true, y_pred):
+    # Génération de la matrice
+    cm = confusion_matrix(y_true, y_pred)
+
+    plt.figure(figsize=(10, 8))
+    # Création de la Heatmap avec Seaborn
+    # annot=True affiche les nombres dans les cases
+    # fmt='d' affiche des entiers (pas de notation scientifique)
+    # cmap='Blues' pour un dégradé de bleu
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=True)
+    
+    plt.title('Matrice de Confusion - KNN')
+    plt.ylabel('Vraies étiquettes')
+    plt.xlabel('Prédictions de l\'IA')
+    
+    # Optionnel : forcer l'affichage de 0 à 9 sur les axes
+    plt.xticks(range(10))
+    plt.yticks(range(10))
+    
+    plt.show()
 

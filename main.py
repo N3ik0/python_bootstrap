@@ -1,6 +1,8 @@
 from loader import Loader as loader
 import utils
 import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 
 
 # Création du loader
@@ -28,8 +30,21 @@ utils.display_distribution_bar_chart(loader.y_train)
 utils.display_all_numbers(loader)
 
 # reshape des images
-# reshape_img = loader.reshape_dataset()
+reshape_img = loader.prepare_dataset()
 # Optimisation des images pour le calcul (passage à 1)
 
+# Création du modèle
+knn = KNeighborsClassifier(n_neighbors=3)
+# Entrainement du modèle
+print('---Entrainement en cours---')
+knn.fit(loader.x_train, loader.y_train)
+# Prédiction du modèle
+y_pred = knn.predict(loader.x_test)
+# Calcul du score entre 0 et 1
+score = accuracy_score(loader.y_test, y_pred)
+error_indices = np.where(y_pred != loader.y_test)[0]
+print(f"Le nombres total d'erreurs est : {len(error_indices)}")
+print(f"L'accuracy du modèle est de : {score * 100:.2f}%")
 
-
+# Affichage de la matrice de confusion
+cm = utils.display_confusion_matrix(loader.y_test, y_pred)
