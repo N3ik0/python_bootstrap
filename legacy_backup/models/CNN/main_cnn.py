@@ -52,12 +52,20 @@ else:
         metrics=['accuracy']
     )
 
-    # Entraînement (5 passages sur les données)
+    # Ajout d'early stopping pour s'arrêter quand le val loss arrête de progresser
+    early_stop = tf.keras.callbacks.EarlyStopping(
+        monitor='val_loss',
+        patience=3,
+        restore_best_weights=True
+    )
+
+    # Entraînement (X passages sur les données, avec early_stop)
     model.fit(
         data_loader.x_train, 
         data_loader.y_train, 
-        epochs=5, 
-        validation_data=(data_loader.x_test, data_loader.y_test)
+        epochs=100, 
+        validation_data=(data_loader.x_test, data_loader.y_test),
+        callbacks=[early_stop]
     )
 
     # Sauvegarde pour la prochaine fois
@@ -81,3 +89,9 @@ utils.display_confusion_matrix(data_loader.y_test, y_pred)
 
 # 5. Résumé final
 model.summary()
+
+# 6. Evaluation du modèle chargé
+print(f"-----Évaluation du modèle chargé-----")
+results = model.evaluate(data_loader.x_test, data_loader.y_test, verbose=0)
+print(f"Test Loss: {results[0]:.4f}")
+print(f"Test Accuracy: {results[1]*100:.2f}%")
